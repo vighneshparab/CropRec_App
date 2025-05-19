@@ -36,7 +36,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // CORS configuration
-const allowedOrigins = [process.env.CLIENT_URL || "https://croprec-server.onrender.com"];
+const allowedOrigins = [process.env.CLIENT_URL || "https://crop-rec-app-kappa.vercel.app/"];
 app.use(
   cors({
     origin: allowedOrigins,
