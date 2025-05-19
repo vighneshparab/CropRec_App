@@ -36,7 +36,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // CORS configuration
-const allowedOrigins = [process.env.CLIENT_URL || "http://localhost:5173"];
+const allowedOrigins = [process.env.CLIENT_URL || "https://crop-rec-app.vercel.app/"];
 app.use(
   cors({
     origin: allowedOrigins,
