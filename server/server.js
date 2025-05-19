@@ -44,6 +44,11 @@ app.use(
   })
 );
 
+// Root route for sanity check
+app.get("/", (req, res) => {
+  res.status(200).send("🎉 Server is live and kicking!");
+});
+
 // Health check route
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", message: "API is running." });
@@ -66,6 +71,7 @@ app.use((err, req, res, next) => {
 
 // Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log("✅ Server started successfully and ready to accept requests!");
+});
