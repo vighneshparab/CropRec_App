@@ -35,14 +35,27 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 
-// CORS configuration
-const allowedOrigins = [process.env.CLIENT_URL || "https://crop-rec-app-kappa.vercel.app/"];
+// ✅ CORS Configuration
+const allowedOrigins = [
+  "https://crop-rec-app-kappa.vercel.app", // 🚫 no trailing slash
+  "http://localhost:3000" // ✅ optional, for local development
+];
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
+// ✅ Handle preflight requests
+app.options("*", cors());
 
 // Root route for sanity check
 app.get("/", (req, res) => {
@@ -63,13 +76,13 @@ app.use("/api/community", communityRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/weather", weatherRoutes);
 
-// Global error handler (optional - for cleaner API error handling)
+// Global error handler
 app.use((err, req, res, next) => {
   console.error("❗ Error:", err.stack);
   res.status(500).json({ error: "Something went wrong." });
 });
 
-// Server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
