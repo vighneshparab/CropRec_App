@@ -30,18 +30,24 @@ dotenv.config();
 
 const app = express();
 
-// ✅ CORS Configuration - MUST BE FIRST
+// ✅ CORS Configuration - Corrected
 const corsOptions = {
   origin: [
-    "https://crop-rec-app-kappa.vercel.app/",
-    "http://localhost:3000"
+    "https://crop-rec-app-kappa.vercel.app",  // NO trailing slash here
+    "http://localhost:5173"
   ],
   credentials: true,
   methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization"
+  ],
 };
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // handle preflight
+app.options("*", cors(corsOptions)); // handle preflight requests
 
 // ✅ Core Middlewares
 app.use(helmet());
