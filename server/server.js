@@ -33,7 +33,7 @@ const app = express();
 // ✅ CORS Configuration - MUST BE FIRST
 const corsOptions = {
   origin: [
-    "https://crop-rec-app-kappa.vercel.app",
+    "https://crop-rec-app-kappa.vercel.app/",
     "http://localhost:3000"
   ],
   credentials: true,
